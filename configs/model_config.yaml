@@ -1,0 +1,52 @@
+# Model configuration for the training process
+
+model:
+  # Models to be used in the ensemble
+  base_models:
+    - xgb
+    - cat
+    - lgb
+
+  # Configuration for the XGBoost model pipeline
+  xgb:
+    imputer_strategy: median
+    scaler: standard
+    regressor:
+      max_depth: 10
+      learning_rate: 0.05
+      n_estimators: 200
+      subsample: 0.6
+      colsample_bytree: 1.0
+      reg_lambda: 1
+      reg_alpha: 5
+
+  # Configuration for the CatBoost model pipeline
+  cat:
+    imputer_strategy: median
+    regressor:
+      depth: 5
+      learning_rate: 0.05
+      iterations: 100
+      subsample: 0.6
+      l2_leaf_reg: 1
+      random_strength: 0
+    silent: true
+
+  # Configuration for the LightGBM model pipeline
+  lgb:
+    imputer_strategy: median
+    scaler: standard
+    regressor:
+      learning_rate: 0.05
+      max_depth: 8
+      num_leaves: 100
+      min_data_in_leaf: 5
+      feature_fraction: 0.8
+      bagging_fraction: 0.7
+      bagging_freq: 6
+      lambda_l1: 10
+      lambda_l2: 0.1
+
+  # Configuration for the Voting Regressor ensemble
+  voting_regressor:
+    verbose: 1
